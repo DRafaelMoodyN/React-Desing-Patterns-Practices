@@ -1,34 +1,33 @@
 import { FC } from "react"
 import { CounterPresentation } from "../presentation/CounterPresentation"
-import { UseCounter } from "../hook/UseCounter"
+import { ReducerCounter } from "../hook/ReducerCounter"
 
 type containerproperty = {
     initial?: number
 }
 
-const CounterContainer: FC<containerproperty> = ({ initial = 15 }) => {
+const CounterContainerReducer: FC<containerproperty> = () => {
 
-    const { click, counter, counterAumentar } = UseCounter(
-        {
-            MAX_COUNTER: 10,
-            INITIAL: initial
-        })
+    const { counter, previous, counterAumentar, counterReset } = ReducerCounter()
 
     const onClick = (value: number): void => {
         counterAumentar(value)
     }
 
+    const onReset = (): void => counterReset()
+
     return (
         <>
             <CounterPresentation
                 counter={counter}
-                click={click}
+                click={previous}
                 onButtonClick={(value) => onClick(value)}
-                onReset={() => { }} />
+                onReset={onReset}
+            />
         </>
     )
 }
 
 export {
-    CounterContainer
+    CounterContainerReducer
 }
